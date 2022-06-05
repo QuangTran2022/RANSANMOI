@@ -1,9 +1,9 @@
-#pragma once // tránh ð?ng ð? thý vi?n khi g?i ch?ng file lên nhau
+#pragma once // trï¿½nh ï¿½?ng ï¿½? thï¿½ vi?n khi g?i ch?ng file lï¿½n nhau
 #include <stdio.h>
 #include <conio.h>
-#include<ctime> /* thý vi?n h? tr? v? th?i gian th?c */
-#include "windows.h" // thý vi?n này bá ð?o l?m nhé - ch?a nhi?u ð? chõi nek - c? t?m hi?u d?n d?n s
-//======= l?y t?a ð? x c?a con tr? hi?n t?i =============
+#include<ctime> /* thï¿½ vi?n h? tr? v? th?i gian th?c */
+#include "windows.h" // thï¿½ vi?n nï¿½y bï¿½ ï¿½?o l?m nhï¿½ - ch?a nhi?u ï¿½? chï¿½i nek - c? t?m hi?u d?n d?n s
+//======= l?y t?a ï¿½? x c?a con tr? hi?n t?i =============
 #define KEY_NONE	-1
 int whereX()
 {
@@ -12,7 +12,7 @@ int whereX()
 		return csbi.dwCursorPosition.X;
 	return -1;
 }
-//========= l?y t?a ð? y c?a con tr? hi?n t?i =======
+//========= l?y t?a ï¿½? y c?a con tr? hi?n t?i =======
 int whereY()
 {
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -20,7 +20,7 @@ int whereY()
 		return csbi.dwCursorPosition.Y;
 	return -1;
 }
-//============== d?ch con tr? hi?n t?i ð?n ði?m có t?a ð? (x,y) ==========
+//============== d?ch con tr? hi?n t?i ï¿½?n ï¿½i?m cï¿½ t?a ï¿½? (x,y) ==========
 void gotoXY(int x, int y)
 {
 	HANDLE hConsoleOutput;
@@ -28,7 +28,7 @@ void gotoXY(int x, int y)
 	hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleCursorPosition(hConsoleOutput, Cursor_an_Pos);
 }
-//============= ð?t màu cho ch? =========
+//============= ï¿½?t mï¿½u cho ch? =========
 void SetColor(WORD color)
 {
 	HANDLE hConsoleOutput;
@@ -44,14 +44,14 @@ void SetColor(WORD color)
 
 	SetConsoleTextAttribute(hConsoleOutput, wAttributes);
 }
-//============== làm ?n tr? chu?t ===========
+//============== lï¿½m ?n tr? chu?t ===========
 void ShowCur(bool CursorVisibility)
 {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO cursor = { 1, CursorVisibility };
 	SetConsoleCursorInfo(handle, &cursor);
 }
-//======= tr? v? m? phím ngý?i dùng b?m =========
+//======= tr? v? m? phï¿½m ngï¿½?i dï¿½ng b?m =========
 int inputKey()
 {
 	if (_kbhit())
@@ -72,4 +72,24 @@ int inputKey()
 	}
 
 	return KEY_NONE;
+}
+void clrscr()
+{
+	CONSOLE_SCREEN_BUFFER_INFO	csbiInfo;                  
+	HANDLE	hConsoleOut;
+	COORD	Home = {0,0};
+	DWORD	dummy;
+
+	hConsoleOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	GetConsoleScreenBufferInfo(hConsoleOut,&csbiInfo);
+
+	FillConsoleOutputCharacter(hConsoleOut,' ',csbiInfo.dwSize.X * csbiInfo.dwSize.Y,Home,&dummy);
+	csbiInfo.dwCursorPosition.X = 0;
+	csbiInfo.dwCursorPosition.Y = 0;
+	SetConsoleCursorPosition(hConsoleOut,csbiInfo.dwCursorPosition);
+}void textcolor(int x)
+{
+	HANDLE mau;
+	mau = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(mau, x);
 }
